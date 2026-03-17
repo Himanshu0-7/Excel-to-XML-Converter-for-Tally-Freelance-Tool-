@@ -1,0 +1,14 @@
+import pytesseract
+import pandas as pd
+from PIL import Image
+
+# OCR the scanned image
+img = Image.open("img_scanned.pdf")
+text = pytesseract.image_to_string(img)
+
+# Convert to Excel (each line as row)
+lines = text.split("\n")
+df = pd.DataFrame(lines, columns=["Extracted Text"])
+
+df.to_excel("output.xlsx", index=False)
+print("✅ Excel saved as output.xlsx")
